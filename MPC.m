@@ -1,7 +1,6 @@
 % 利用MPC跟踪轨迹
 % 作者：zhaokun
-% 对于误差计算存在问题
-% 日期：2021/04/29
+% 日期：2022/04/29
 clc
 clear
 close all
@@ -76,8 +75,18 @@ end
 
 figure(2);
 %绘制相对于参考线的横向误差
+title('横向误差')
 plot(latError_MPC(:,1),latError_MPC(:,2),'r');
-figure(3)
+
+figure(3)%速度误差
+title('速度误差')
+
+plot(speedError_MPC(:,1),speedError_MPC(:,2),'r');
+
+figure(4)%前轮转角误差
+title('前轮转角误差')
+plot(deltaError_MPC(:,1),deltaError_MPC(:,2),'b');
+
 
 %% 保存
 path_MPC = pos_actual;

@@ -3,11 +3,34 @@ function    [Delta_real,v_real,idx,latError,U ] = ...
 %% MPC预设参数
 Nx = 3;         % 状态量的个数
 Nu = 2;         % 控制量的个数
-Np = 20;        % 预测步长
-Nc = 6;        % 控制步长
+Np = 15;        % 预测步长
+Nc = 4;        % 控制步长
 row = 5;       % 松弛因子
-Q = 100*eye(Np*Nx);      % (Np*Nx) × (Np*Nx)
-R = 10*eye(Nc*Nu);        % (Nc*Nu) × (Nc*Nu)
+
+q=[100 0 0;
+    0 100 0;
+    0 0 100];
+
+r=[0 0;
+   0 0];
+
+Q_cell=cell(Np,Np);
+R_cell=cell(Nc,Nc);
+Q_cell(:)={zeros(3)};
+R_cell(:)={zeros(2)};
+for i=1:Np
+Q_cell{i,i}=q;    
+end
+for i=1:Nc
+R_cell{i,i}=r;   
+end
+
+Q=cell2mat(Q_cell);
+R=cell2mat(R_cell);
+
+%Q = 100*eye(Np*Nx);      % (Np*Nx) × (Np*Nx)
+%R = 10*eye(Nc*Nu);        % (Nc*Nu) × (Nc*Nu)
+
 
 % 控制量约束条件
 umin = [-0.2; -0.54];
